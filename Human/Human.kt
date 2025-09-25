@@ -35,6 +35,20 @@ open class Human
         println("Human is moved TO: $y  $x")
     }
 }
+class Driver(
+    name: String,
+    surname: String,
+    secondName: String,
+    groupNumber: Int,
+    private val speedx: Int = 3,
+    private val speedy: Int = 0
+): Human(name, surname, secondName, groupNumber){
+    override fun move(){
+        x+=speedx
+        y+=speedy
+        println("$name водитель прошел ($x, $y)")
+    }
+}
 
 fun main(){
     val petya = Human("Petya", "Ivanov", "Darevich", 444)
@@ -51,4 +65,20 @@ fun main(){
         petya.moveTo(newX, newY)
     }
     println("${petya.x}")
+
+    var counter: Int = 10
+    val name: String = ""
+    println(name)
+    println("Hello World!")
+
+    val driver = Driver("Artaa", "Ertine", "Adygzyewych", 1)
+    val all = humans + driver
+    val threads = all.map { person -> Thread{
+        repeat(10){
+            person.move()
+            Thread.sleep(300)
+        }
+    } }
+    threads.forEach { it.start() }
+    threads.forEach { it.join() }
 }
